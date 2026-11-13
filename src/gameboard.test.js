@@ -23,7 +23,36 @@ test('10 cells per row', ()=>{
 test('each cell starts as null', ()=>{
     for(let i = 0; i < gameboard.grid.length; i++){
         for(let j = 0; j < gameboard.grid[i].length; j++){
-            expect(gameboard.grid[i][j]).toBe(null);
+            expect(gameboard.grid[i][j]).toBeNull()
+        }
+    };
+})
+
+test('a ship placement makes the coordinates on the grid change', ()=>{
+    gameboard.placeShip(3, 2, 4, 'x');
+    for(let i = 2; i < 5; i++){
+        expect(gameBoard.grid[i][4]).not.toBeNull();
+    }
+})
+
+test('see that the grids of a ship point to the same one', ()=>{
+    gameboard.placeShip(3, 4, 8, 'x');
+    for(let i = 4; i < 7; i++){
+        expect(()=>{
+            if(gameboard.grid[i][8] === gameboard.grid[i+1][8]){
+                return true;
+            }
+        }).toBe(true);
+    }
+})
+
+test('rejected placement returns false and grid remains unchanged', ()=>{
+    const result = gameboard.placeShip(3, 8, 5, 'x'); // Since either a true or false is returned
+    expect(result).toBe(false);
+    //Check every grid
+    for(let i = 0; i < gameboard.grid.length; i++){
+        for(let j = 0; j < gameboard.grid[i].length; j++){
+            expect(gameboard.grid[i][j]).toBeNull()
         }
     };
 })

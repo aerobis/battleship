@@ -19,11 +19,23 @@ export default class Gameboard{
         ]
     }
 
+    getCell(x, y){
+        return this.grid[y, x];
+    }
+
+    setCell(x, y, value){
+        this.grid[y][x] = value;
+    }
+
     getShips(){
         return this.ships;
     }
 
-    placeShip(x, y){
-        
+    placeShip(length, x, y, direction){
+        const ship = new Ship(length);
+        if(direction !== 'x' || direction !== 'y'){
+            return 0;
+        }
+
     }
 }
