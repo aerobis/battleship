@@ -31,7 +31,7 @@ test('each cell starts as null', ()=>{
 test('a ship placement makes the coordinates on the grid change', ()=>{
     gameboard.placeShip(3, 2, 4, 'x');
     for(let i = 2; i < 5; i++){
-        expect(gameBoard.grid[i][4]).not.toBeNull();
+        expect(gameboard.grid[i][4]).not.toBeNull();
     }
 })
 
