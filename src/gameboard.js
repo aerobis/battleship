@@ -45,7 +45,7 @@ export default class Gameboard{
         }
 
         // For horizontal placement. Grid is [0-9]. 
-        if(direction == 'x' && ( (x + length) <= 10) && (x >= 0) ){
+        if(direction == 'x' && ( (x + length) <= 10) && (x >= 0) && (0 <= y <= 9) ){
             // First check for any collisions
             for(let i = x; i < length + x; i++){
                 let cell = this.getCell(i, y);
@@ -55,7 +55,6 @@ export default class Gameboard{
             }
             // If none, write
             for(let i = x; i < length + x; i++){
-                let cell = this.getCell(i, y)
                 this.setCell(i, y, ship);
             }
 
@@ -64,7 +63,7 @@ export default class Gameboard{
         }
 
         // For vertical placement.
-        if(direction === 'y' && ((y + length) <= 10) && (y>= 0) ){
+        if(direction === 'y' && ((y + length) <= 10) && (y>= 0) && (0 <= x <= 9)){
             // Check for collisions
             for(let i = y; i < length + y; i++){
                 let cell = this.getCell(x, i);
@@ -75,7 +74,6 @@ export default class Gameboard{
 
             // If none, write
             for(let i = y; i < length + y; i++){
-                let cell = this.getCell(x, i);
                 this.setCell(x, i, ship);
             }
 
