@@ -27,6 +27,10 @@ export default class Gameboard{
         this.grid[y][x] = value;
     }
 
+    addShip(ship){
+        this.ships.push(ship);
+    }
+
     getShips(){
         return this.ships;
     }
@@ -41,26 +45,41 @@ export default class Gameboard{
         }
 
         // For horizontal placement. Grid is [0-9]. 
-        if(direction == 'x' && ( (x + length) < 10) && ((x + length) >= 0) ){
+        if(direction == 'x' && ( (x + length) <= 10) && (x >= 0) ){
+            // First check for any collisions
             for(let i = x; i < length + x; i++){
                 let cell = this.getCell(i, y);
                 if(cell !== null){
                     return false;
                 }
+            }
+            // If none, write
+            for(let i = x; i < length + x; i++){
+                let cell = this.getCell(i, y)
                 this.setCell(i, y, ship);
             }
+
+            this.addShip(ship);
             return true;
         }
 
         // For vertical placement.
-        if(direction === 'y' && ((y + length) < 10) && ((y + length) >= 0) ){
+        if(direction === 'y' && ((y + length) <= 10) && (y>= 0) ){
+            // Check for collisions
             for(let i = y; i < length + y; i++){
                 let cell = this.getCell(x, i);
                 if(cell !== null){
                     return false;
                 }
+            }
+
+            // If none, write
+            for(let i = y; i < length + y; i++){
+                let cell = this.getCell(x, i);
                 this.setCell(x, i, ship);
             }
+
+            this.addShip(ship);
             return true;
         }
 
