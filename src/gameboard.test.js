@@ -28,10 +28,12 @@ test('each cell starts as null', ()=>{
     };
 })
 
+
+//SHIP PLACEMENT
 test('a ship placement makes the coordinates on the grid change', ()=>{
     gameboard.placeShip(3, 2, 4, 'x');
     for(let i = 2; i < 5; i++){
-        expect(gameboard.grid[i][4]).not.toBeNull();
+        expect(gameboard.grid[4][i]).not.toBeNull();
     }
 })
 
@@ -39,7 +41,7 @@ test('see that the grids of a ship point to the same one', ()=>{
     gameboard.placeShip(3, 4, 8, 'x');
     for(let i = 4; i < 7; i++){
         expect(()=>{
-            if(gameboard.grid[i][8] === gameboard.grid[i+1][8]){
+            if(gameboard.grid[8][i] === gameboard.grid[i+1][8]){
                 return true;
             }
         }).toBe(true);
