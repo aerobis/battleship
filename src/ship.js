@@ -5,6 +5,11 @@ export default class Ship{
         this.active = active;
     }
 
+    getLength(){
+        const length = this.length;
+        return length;
+    }
+
     hit(){
         this.hits++;
     }
