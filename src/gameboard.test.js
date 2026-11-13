@@ -39,12 +39,8 @@ test('a ship placement makes the coordinates on the grid change', ()=>{
 
 test('see that the grids of a ship point to the same one', ()=>{
     gameboard.placeShip(3, 4, 8, 'x');
-    for(let i = 4; i < 7; i++){
-        expect(()=>{
-            if(gameboard.grid[8][i] === gameboard.grid[i+1][8]){
-                return true;
-            }
-        }).toBe(true);
+    for(let i = 4; i < 6; i++){
+        expect(gameboard.grid[8][i]).toBe(gameboard.grid[8][i + 1]);
     }
 })
 
@@ -54,7 +50,7 @@ test('rejected placement returns false and grid remains unchanged', ()=>{
     //Check every grid
     for(let i = 0; i < gameboard.grid.length; i++){
         for(let j = 0; j < gameboard.grid[i].length; j++){
-            expect(gameboard.grid[i][j]).toBeNull()
+            expect(gameboard.grid[j][i]).toBeNull()
         }
     };
 })
