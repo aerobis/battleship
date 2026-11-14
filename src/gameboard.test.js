@@ -111,12 +111,12 @@ describe('receive hit checks', ()=>{
         expect(gameboard.allSunk()).toBe(true);
     })
 
-    test('off board returns OOB (out of bounds)',()=>{
+    test("off board returns OOB (out of bounds) and doesn't impact any ships",()=>{
         gameboard.placeShip(3, 2, 5, 'x');
         let cell = gameboard.getCell(2, 5);
         expect(gameboard.receiveAttack(5, 11)).toBe("OOB");
         expect(gameboard.receiveAttack(-1, 3)).toBe("OOB");
-        expect(cell).toBe(gameboard.getCell(2,5));
+        expect(cell).toBe(gameboard.getCell(2, 5));
     })
 })
 

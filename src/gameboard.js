@@ -86,7 +86,7 @@ export default class Gameboard{
     }
 
     receiveAttack(x, y){
-        if ((x < 0 && x >= 10) || (y < 0 && y >= 10)){
+        if ((x < 0 || x >= 10) || (y < 0 || y >= 10)){
             return "OOB";
         }
         let ship = this.getCell(x, y);
@@ -108,5 +108,27 @@ export default class Gameboard{
             this.setCell(x, y, "MISS");
             return "MISS";
         }
+    }
+
+    allSunk(){
+        let nullCounter = 0
+        for(let i = 0; i < 10; i++){ // Row
+            for (let j = 0; j < 10; j++){ // Column
+                const cell = this.getCell(i, j);
+                // If there are ANY ships in the grid, return false
+                if(typeof cell === "object" && cell !== null && !Array.isArray(cell)){
+                    return false;
+                }
+                // If cell is null, increase null counter
+                if(cell === null){
+                    nullCounter++;
+                }
+            } 
+        }
+        // Return false by default if the board isn't empty
+        if(nullCounter == 100){
+            return false;
+        }
+        return true;
     }
 }
