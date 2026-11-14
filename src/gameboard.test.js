@@ -61,6 +61,7 @@ describe('receive hit checks', ()=>{
     test('hit is returned on a successful hit', ()=>{
         gameboard.placeShip(3, 2, 4, 'x');
         expect(gameboard.receiveAttack(2, 4)).toBe("HIT");
+        expect(gameboard.getCell(2, 4)).toBe("HIT");
     });
 
     test('miss is returned on a miss', ()=>{

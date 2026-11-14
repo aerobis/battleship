@@ -84,4 +84,29 @@ export default class Gameboard{
         // Return false by default if not
         return false;
     }
+
+    receiveAttack(x, y){
+        if ((x < 0 && x >= 10) || (y < 0 && y >= 10)){
+            return "OOB";
+        }
+        let ship = this.getCell(x, y);
+        // Ship is a valid Ship.
+        if (typeof ship === "object" && ship !== null && !Array.isArray(ship)){
+            ship.hit();
+            this.setCell(x, y, "HIT"); // Add hit alongside the ship object in the grid
+            // Check if ship is sunk
+            if(ship.isSunk()){
+                return "SUNK";
+            }
+            //If not sunk, return HIT
+            return "HIT";
+        //Repeated hits or misses
+        }else if((ship == "HIT" || ship == "MISS") && (typeof ship !== "object")){
+            return "REPEAT";
+        //A miss
+        }else if(ship == null){
+            this.setCell(x, y, "MISS");
+            return "MISS";
+        }
+    }
 }
