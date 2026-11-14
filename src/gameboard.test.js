@@ -57,7 +57,67 @@ describe("Tests for ship placement", ()=>{
     })
 })
 
+describe('receive hit checks', ()=>{
+    test('hit is returned on a successful hit', ()=>{
+        gameboard.placeShip(3, 2, 4, 'x');
+        expect(gameboard.receiveAttack(2, 4)).toBe("HIT");
+    });
 
+    test('miss is returned on a miss', ()=>{
+        gameboard.placeShip(3, 2, 4, 'x');
+        expect(gameboard.receiveAttack(1, 3)).toBe("MISS");
+    });
+
+    test('repeat attacks return repeated', ()=>{
+        gameboard.placeShip(3, 2, 4, 'x');
+        gameboard.receiveAttack(2, 4);
+        expect(gameboard.receiveAttack(2, 4)).toBe("REPEAT");
+        expect(gameboard.getShips()[0].getHits()).toBe(1)
+    });
+
+    test('repeat misses should be repeated', ()=>{
+        gameboard.placeShip(3, 1, 5, 'x');
+        gameboard.receiveAttack(7, 2);
+        expect(gameboard.receiveAttack(7, 2)).toBe("REPEAT");
+    })
+
+    test('ship sinks after hits = length', ()=>{
+        gameboard.placeShip(1, 2, 4, 'y');
+        let ship = gameboard.getCell(2, 4)
+        expect(gameboard.receiveAttack(2, 4)).toBe("SUNK")
+        expect(ship.isSunk()).toBe(true);
+    })
+
+    test("ship isn't sunk by default", ()=>{
+        gameboard.placeShip(1, 2, 4, 'y');
+        let ship = gameboard.getCell(2, 4);
+        expect(ship.isSunk()).toBe(false)
+    })
+
+    test("all ships aren't sunk by default", ()=>{
+        gameboard.placeShip(3, 5, 2, 'y');
+        expect(gameboard.allSunk()).toBe(false);
+    })
+
+    test("allSunk is true when all ships are sunk", ()=>{
+        gameboard.placeShip(3, 5, 2, 'y');
+        gameboard.placeShip(1, 2, 3, 'x');
+        gameboard.receiveAttack(5, 2);
+        gameboard.receiveAttack(5, 3);
+        gameboard.receiveAttack(5, 4);
+        expect(gameboard.allSunk()).toBe(false);
+        gameboard.receiveAttack(2, 3);
+        expect(gameboard.allSunk()).toBe(true);
+    })
+
+    test('off board returns OOB (out of bounds)',()=>{
+        gameboard.placeShip(3, 2, 5, 'x');
+        let cell = gameboard.getCell(2, 5);
+        expect(gameboard.receiveAttack(5, 11)).toBe("OOB");
+        expect(gameboard.receiveAttack(-1, 3)).toBe("OOB");
+        expect(cell).toBe(gameboard.getCell(2,5));
+    })
+})
 
 
 
