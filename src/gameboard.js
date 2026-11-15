@@ -91,9 +91,9 @@ export default class Gameboard{
         }
         let ship = this.getCell(x, y);
         // Ship is a valid Ship.
-        if (typeof ship === "object" && ship !== null && !Array.isArray(ship)){
+        if (ship instanceof Ship){
             ship.hit();
-            this.setCell(x, y, "HIT"); // Add hit alongside the ship object in the grid
+            this.setCell(x, y, "HIT"); // Replace the ship reference in the grid with "HIT"
             // Check if ship is sunk
             if(ship.isSunk()){
                 return "SUNK";
@@ -101,7 +101,7 @@ export default class Gameboard{
             //If not sunk, return HIT
             return "HIT";
         //Repeated hits or misses
-        }else if((ship == "HIT" || ship == "MISS") && (typeof ship !== "object")){
+        }else if(ship === "HIT" || ship === "MISS"){
             return "REPEAT";
         //A miss
         }else if(ship == null){
