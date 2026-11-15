@@ -111,24 +111,18 @@ export default class Gameboard{
     }
 
     allSunk(){
-        let nullCounter = 0
-        for(let i = 0; i < 10; i++){ // Row
-            for (let j = 0; j < 10; j++){ // Column
-                const cell = this.getCell(i, j);
-                // If there are ANY ships in the grid, return false
-                if(typeof cell === "object" && cell !== null && !Array.isArray(cell)){
-                    return false;
-                }
-                // If cell is null, increase null counter
-                if(cell === null){
-                    nullCounter++;
-                }
-            } 
-        }
-        // Return false by default if the board isn't empty
-        if(nullCounter == 100){
+        // If there are no ships, then the board is empty.
+        if(this.ships.length === 0){
             return false;
         }
+
+        for (const ship of this.ships){
+            // If even a single ship is still up, return false
+            if(!ship.isSunk()){
+                return false
+            }
+        }
+        // Every ship is sunk
         return true;
     }
 }
